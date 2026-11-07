@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,6 +18,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 64, options: ['default' => 'Nieznane'])]
+    private ?string $first_name = null;
+
+    #[ORM\Column(length: 64, options: ['default' => 'Nieznane'])]
+    private ?string $last_name = null;
+
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -32,9 +41,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    /**
+     * @var Collection<int, UserService>
+     */
+    #[ORM\OneToMany(targetEntity: UserService::class, mappedBy: 'user_id')]
+    private Collection $user_services;
+
+    public function __construct()
+    {
+        $this->user_services = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+
+    public function getFirstName(): ?string
+    {
+        return $this->first_name;
+    }
+
+    public function setFirstName(string $first_name): static
+    {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->last_name;
+    }
+
+    public function setLastName(string $last_name): static
+    {
+        $this->last_name = $last_name;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -106,4 +151,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         
         return $data;
     }
+
+    /**
+     * @return Collection<int, UserService>
+     */
+    public function getUserServices(): Collection
+    {
+        return $this->user_services;
+    }
+
+    public function addUserService(UserService $userService): static
+    {
+        if (!$this->user_services->contains($userService)) {
+            $this->user_services->add($userService);
+            $userService->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserService(UserService $userService): static
+    {
+        if ($this->user_services->removeElement($userService)) {
+            // set the owning side to null (unless already changed)
+            if ($userService->getUserId() === $this) {
+                $userService->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

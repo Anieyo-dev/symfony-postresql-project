@@ -1,0 +1,12 @@
+{% for user in users %}
+  <div class="user-record">
+    <p>{{ user.email }}</p>
+    {% if user.roles|length > 0 %}
+      {% for role in user.roles %}
+        <p>{{ role }}</p>
+      {% endfor %}
+    {% else %}
+    <p>Brak</p>
+    {% endif %}
+  </div>
+{% endfor %}

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Xml Parser Dashboard {% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <p>Application Environment: {{ global_name }}</p>
+    <h1>Your lucky number is {{ number }}</h1>
+    <p>test</p>
+
+    <div class="dashboard-panel">
+      <h1>Mój Dashboard</h1>
+      
+      <!-- Przycisk powiązany z akcją w Symfony -->
+      <a href="{{ path('xml_export') }}" class="btn btn-primary">
+          Wygeneruj XML
+      </a>
+
+      {# {{ form(user_form) }} #}
+      <div class="container-row">
+        <div class="card ">
+          <p>Users List</p>
+          {{ include('base/components/user/_list.html.twig', {users: users}) }}
+        </div>
+        <div class="card ">
+          <p>Services List</p>
+          {{ include('base/components/service/_list.html.twig', {services: services}) }}
+        </div>
+      </div>
+      <div class="card">
+        <h1>Formularz użytkownika</h1>
+        <form action="{{ path('user_create') }}" method="POST" class="mt-4">
+            <div class="mb-3">
+                <label for="first_name" class="form-label">Imię</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Nazwisko</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Adres E-mail</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Hasło</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Zapisz użytkownika</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

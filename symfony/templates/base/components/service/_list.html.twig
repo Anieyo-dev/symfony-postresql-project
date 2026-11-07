@@ -1,0 +1,12 @@
+{% for service in services %}
+  <div class="card_container">
+    {% for key, value in service %}
+      {% if key != 'id' %}
+        <div class="list-col">
+          <p class="list-title">{{ key }}</p>
+          <p>{{ value }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}  
+  </div>
+{% endfor %}

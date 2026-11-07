@@ -1,0 +1,43 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-row{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.card{
+  margin-top: 2rem;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.5);
+}
+
+.user-record{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.list-col{
+
+}
+
+.card_container{
+  display: flex;
+}
+
+.card_container .list-col{
+  width: 100px;
+  padding: 0 1rem;
+}
+
+.list-col .list-title{
+  font-weight: bold;
+}

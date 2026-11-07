@@ -8,6 +8,7 @@ services:
         ipv4_address: 172.55.0.2
     volumes:
       - symfony_project_files:/var/www/html
+      - ../config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     secrets:
       - source: apache-selfsigned-crt
         target: /etc/apache2/ssl/laravel/apache-selfsigned.crt
